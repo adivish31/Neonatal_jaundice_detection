@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #140f07;
+  --bg2: #1b1409;
+  --surface: #241a0d;
+  --surface2: #302010;
+  --border: #4a3516;
+  --accent: #ffb627;
+  --accent2: #ff9800;
+  --accent-warn: #ffc23a;
+  --accent-danger: #e84040;
+  --text: #fff4e0;
+  --text-muted: #c7a977;
+  --font-display: 'Open Sans', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
