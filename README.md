@@ -1,6 +1,6 @@
-# JaundiScan — AI Jaundice Detection
+# JaundiScan — AI Neonatal Jaundice Detection
 
-A full-stack web application for jaundice detection from scleral (eye white) images using ResNet50 transfer learning.
+A full-stack web application for neonatal jaundice detection from scleral (eye white) images using ResNet50 transfer learning.
 
 **Stack:** Python · FastAPI · TensorFlow · Next.js · TypeScript
 
@@ -92,7 +92,7 @@ Frontend runs at: http://localhost:3000
 ## API Endpoints
 
 ### `POST /predict`
-Upload a scleral image and get a jaundice prediction.
+Upload a neonatal scleral image and get a jaundice prediction.
 
 **Request:** `multipart/form-data` with `file` field (image)
 
@@ -146,4 +146,4 @@ Upload a scleral image and get a jaundice prediction.
 
 ## Disclaimer
 
-This tool is for educational and research purposes only. It is not a substitute for professional medical diagnosis.
+This tool is for educational and research purposes only. It is not a substitute for professional medical diagnosis or clinical screening of newborns.
