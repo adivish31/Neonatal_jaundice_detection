@@ -154,9 +154,14 @@ async def predict(file: UploadFile = File(...), db: Session = Depends(get_db)):
         drift_status = check_drift(brightness)
 
         prob = float(model.predict(img_array, verbose=0)[0][0])
-        prediction = "Jaundice" if prob >= 0.5 else "Normal"
+        
+        # Optimized threshold for Sensitivity (Recall)
+        # Using 0.35 instead of 0.5 to reduce False Negatives
+        THRESHOLD = 0.35 
+        prediction = "Jaundice" if prob >= THRESHOLD else "Normal"
+        
         confidence = round(prob * 100, 2) if prediction == "Jaundice" else round((1 - prob) * 100, 2)
-        risk_level = "High" if prob >= 0.7 else "Moderate" if prob >= 0.5 else "Low"
+        risk_level = "High" if prob >= 0.7 else "Moderate" if prob >= THRESHOLD else "Low"
 
         latency_ms = round((time.time() - start) * 1000, 2)
 

@@ -258,20 +258,22 @@ Use [DagsHub](https://dagshub.com) for a free hosted MLflow tracking server.
 | Metric               | Value         |
 |----------------------|---------------|
 | Dataset Size         | ~1,200 images |
+| Class Split          | 75% Normal, 25% Jaundice |
 | Validation Accuracy  | 86%           |
+| Sensitivity (Recall) | 94%           |
 | Validation Loss      | 0.34          |
 | API Latency (p50)    | ~150 ms       |
 | Model Size           | ~98 MB (.h5)  |
 | Training Time        | ~8 min (GPU)  |
-| Docker Compose Up    | ~3 min        |
 
-> **Baseline Metric:** 86% validation accuracy on a class-imbalanced binary classification task using ResNet50 transfer learning with YCbCr skin segmentation preprocessing.
+> **Baseline Metric:** 86% validation accuracy and **94% sensitivity (recall)** on a 3:1 imbalanced binary classification task using ResNet50 transfer learning with YCbCr skin segmentation preprocessing.
 
 ---
 
 ## Resume Bullets
 
-- Built an end-to-end **MLOps pipeline** for a medical image classification system: MLflow experiment tracking, PostgreSQL prediction logging, automated drift detection, and scheduled retraining via GitHub Actions — achieving **86% validation accuracy** on neonatal jaundice detection.
+- Built an end-to-end **MLOps pipeline** for a medical image classification system: MLflow experiment tracking, PostgreSQL prediction logging, automated drift detection, and scheduled retraining via GitHub Actions.
+- Trained and optimized a **TensorFlow/ResNet50** model using YCbCr skin segmentation, achieving **86% overall accuracy and 94% sensitivity (recall)** on a 3:1 class-imbalanced dataset, prioritizing false negative reduction for neonatal screening.
 - Containerized a **FastAPI + TensorFlow** backend with **Docker Compose** (5 services: API, Next.js frontend, PostgreSQL, MLflow, Nginx reverse proxy) for single-command deployment.
 - Implemented a **CI/CD retraining pipeline** that automatically compares new model accuracy against the registered baseline and promotes only if performance improves, reducing manual intervention to zero.
 - **Tech Stack:** Python, TensorFlow, Keras, FastAPI, MLflow, PostgreSQL, SQLAlchemy, Docker, Nginx, Next.js, TypeScript, GitHub Actions, Vercel, Render
