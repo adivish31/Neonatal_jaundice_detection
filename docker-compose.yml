@@ -1,0 +1,76 @@
+services:
+  # ─── Nginx Reverse Proxy ───
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+      - mlflow
+    restart: unless-stopped
+
+  # ─── Next.js Frontend ───
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:80
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # ─── FastAPI Backend ───
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/mlops_logs
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+    depends_on:
+      db:
+        condition: service_healthy
+      mlflow:
+        condition: service_started
+    restart: unless-stopped
+
+  # ─── PostgreSQL for Prediction Logging ───
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=mlops_logs
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ─── MLflow Tracking Server ───
+  mlflow:
+    build:
+      context: ./mlflow
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow_data:/mlflow
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  mlflow_data:

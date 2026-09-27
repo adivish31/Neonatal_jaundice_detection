@@ -26,6 +26,20 @@ frontend/.next/
 frontend/node_modules/
 frontend/out/
 
-# Misc
-.DS_Store
+# Docker
 *.log
+
+# MLflow local artifacts
+mlruns/
+mlartifacts/
+
+# Database
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
